@@ -3,5 +3,7 @@ spring:
     port: 5672
 
 rabbitmq:
+    producer:
+      telegram-notifications-queue: telegram-notifications-queue
     consumer:
       new-vacancies-queue: new-vacancies-queue
