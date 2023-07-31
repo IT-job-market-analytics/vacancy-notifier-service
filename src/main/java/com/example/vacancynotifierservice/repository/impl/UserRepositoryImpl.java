@@ -23,7 +23,5 @@ public class UserRepositoryImpl implements UserRepository {
 
         UserDto[] userArray = restTemplate.getForObject(fullURI,UserDto[].class);
         return Arrays.stream(userArray).toList();
-
-
     }
 }

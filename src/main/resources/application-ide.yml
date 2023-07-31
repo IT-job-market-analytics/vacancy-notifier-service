@@ -1,3 +1,6 @@
+logging:
+  level:
+    com.example.vacancynotifierservice.service: debug
 
 spring:
   rabbitmq:
