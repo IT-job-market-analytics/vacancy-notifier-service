@@ -23,7 +23,7 @@ public class ConsumerService {
         log.info("Handling vacancy \"{}\" found by query \"{}\"", vacancy.getName(), vacancy.getQuery());
 
         List<UserDto> users = userRepository.findUsersByQuery(vacancy.getQuery());
-        log.debug("2 users found for query \"{}\"", vacancy.getQuery());
+        log.debug("{} user(s) found for query \"{}\"", users.size(), vacancy.getQuery());
 
         sendMessagesToTelegram(users, composeVacancyMessage(vacancy));
     }
@@ -46,6 +46,13 @@ public class ConsumerService {
     }
 
     private String composeVacancyMessage(Vacancy vacancy) {
-        return "test";
+        return
+                """
+                Новая вакансия по вашему запросу "%s"!
+                
+                %s
+                
+                %s
+                """.formatted(vacancy.getQuery(), vacancy.getName(), vacancy.getAlternateUrl());
     }
 }
