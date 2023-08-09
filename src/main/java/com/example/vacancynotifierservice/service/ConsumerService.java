@@ -46,13 +46,54 @@ public class ConsumerService {
     }
 
     private String composeVacancyMessage(Vacancy vacancy) {
-        return
-                """
-                Новая вакансия по вашему запросу "%s"!
-                
-                %s
-                
-                %s
-                """.formatted(vacancy.getQuery(), vacancy.getName(), vacancy.getAlternateUrl());
+        StringBuilder stringBuilder = new StringBuilder("Новая вакансия по вашему запросу: ");
+        stringBuilder.append("<b>#").append(vacancy.getQuery()).append("</b>");
+        stringBuilder.append("\n");
+        stringBuilder.append("\n").append("<u>").append(vacancy.getName()).append("</u>");
+        stringBuilder.append("\n").append("<b>").append(vacancy.getArea().getName()).append("</b>");
+
+        String salaryFrom = String.valueOf(vacancy.getSalary().getFrom());
+        String salaryTo = String.valueOf(vacancy.getSalary().getTo());
+        if (!salaryFrom.equals("0") || !salaryTo.equals("0")) {
+            stringBuilder.append("\n").append("Оплата: ");
+            if (!salaryFrom.equals("0")) {
+                stringBuilder.append("от ").append(salaryFrom).append(" ");
+            }
+            if (!salaryTo.equals("0")) {
+                stringBuilder.append("до ").append(salaryTo);
+            }
+            stringBuilder.append(vacancy.getSalary().getCurrency());
+        }
+
+        stringBuilder.append("\n");
+        stringBuilder.append("\n").append("<u>").append(vacancy.getEmployer().getName()).append("</u>");
+
+        String requirement = vacancy.getSnippet().getRequirement();
+        String responsibility = vacancy.getSnippet().getResponsibility();
+        String experience = vacancy.getExperience().getName();
+        log.info("snippets -> " + requirement + " -> "+responsibility + " -> " + experience);
+        if (requirement != null) {
+            stringBuilder.append("\n").append("<u>Требования:</u> ").append(requirement);
+        }
+        if (responsibility != null) {
+            stringBuilder.append("\n").append("<u>Обязанности:</u> ").append(responsibility);
+        }
+        if (experience != null) {
+            stringBuilder.append("\n").append("<u>Опыт:</u> ").append(experience);
+        }
+
+        stringBuilder.append("\n");
+        stringBuilder.append("\n").append("Ссылка на вакансию -> ").append(vacancy.getAlternateUrl());
+
+
+
+        return stringBuilder.toString();
+//                """
+//                Новая вакансия по вашему запросу "%s"!
+//
+//                %s
+//
+//                %s
+//                """.formatted(vacancy.getQuery(), vacancy.getName(), vacancy.getAlternateUrl());
     }
 }
