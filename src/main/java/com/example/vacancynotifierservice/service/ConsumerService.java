@@ -49,40 +49,51 @@ public class ConsumerService {
         StringBuilder stringBuilder = new StringBuilder("Новая вакансия по вашему запросу: ");
         stringBuilder.append("<b>#").append(vacancy.getQuery()).append("</b>");
         stringBuilder.append("\n");
-        stringBuilder.append("\n").append("<u>").append(vacancy.getName()).append("</u>");
-        stringBuilder.append("\n").append("<b>").append(vacancy.getArea().getName()).append("</b>");
+        stringBuilder.append("\n").append(vacancy.getName());
 
-        String salaryFrom = String.valueOf(vacancy.getSalary().getFrom());
-        String salaryTo = String.valueOf(vacancy.getSalary().getTo());
-        if (!salaryFrom.equals("0") || !salaryTo.equals("0")) {
-            stringBuilder.append("\n").append("Оплата: ");
-            if (!salaryFrom.equals("0")) {
-                stringBuilder.append("от ").append(salaryFrom).append(" ");
+        if (vacancy.getEmployer() != null) {
+            stringBuilder.append(" в ").append(vacancy.getEmployer().getName());
+        }
+
+        if (vacancy.getArea() != null) {
+            stringBuilder.append("\n").append("<b>").append(vacancy.getArea().getName()).append("</b>");
+        }
+
+        if (vacancy.getSalary() != null) {
+            String salaryFrom = String.valueOf(vacancy.getSalary().getFrom());
+            String salaryTo = String.valueOf(vacancy.getSalary().getTo());
+            if (!salaryFrom.equals("0") || !salaryTo.equals("0")) {
+                stringBuilder.append("\n").append("Оплата: ");
+                if (!salaryFrom.equals("0")) {
+                    stringBuilder.append("от ").append(salaryFrom).append(" ");
+                }
+                if (!salaryTo.equals("0")) {
+                    stringBuilder.append("до ").append(salaryTo).append(" ");
+                }
+                stringBuilder.append(vacancy.getSalary().getCurrency());
             }
-            if (!salaryTo.equals("0")) {
-                stringBuilder.append("до ").append(salaryTo);
+        }
+
+        if (vacancy.getSnippet() != null) {
+            String requirement = vacancy.getSnippet().getRequirement();
+            String responsibility = vacancy.getSnippet().getResponsibility();
+            if (requirement != null) {
+                stringBuilder.append("\n\n").append("Требования: ").append(requirement);
             }
-            stringBuilder.append(vacancy.getSalary().getCurrency());
+            if (responsibility != null) {
+                stringBuilder.append("\n\n").append("Обязанности: ").append(responsibility);
+            }
+        }
+
+        if (vacancy.getExperience() != null) {
+            String experience = vacancy.getExperience().getName();
+            if (experience != null) {
+                stringBuilder.append("\n").append("Опыт: ").append(experience);
+            }
         }
 
         stringBuilder.append("\n");
-        stringBuilder.append("\n").append("<u>").append(vacancy.getEmployer().getName()).append("</u>");
-
-        String requirement = vacancy.getSnippet().getRequirement();
-        String responsibility = vacancy.getSnippet().getResponsibility();
-        String experience = vacancy.getExperience().getName();
-        if (requirement != null) {
-            stringBuilder.append("\n").append("<u>Требования:</u> ").append(requirement);
-        }
-        if (responsibility != null) {
-            stringBuilder.append("\n").append("<u>Обязанности:</u> ").append(responsibility);
-        }
-        if (experience != null) {
-            stringBuilder.append("\n").append("<u>Опыт:</u> ").append(experience);
-        }
-
-        stringBuilder.append("\n");
-        stringBuilder.append("\n").append("Ссылка на вакансию -> ").append(vacancy.getAlternateUrl());
+        stringBuilder.append("\n").append(vacancy.getAlternateUrl());
 
         return stringBuilder.toString();
     }
