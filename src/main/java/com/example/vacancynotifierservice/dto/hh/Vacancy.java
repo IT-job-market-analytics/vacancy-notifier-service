@@ -12,8 +12,8 @@ public class Vacancy {
     private String id;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("area")
-    private Area area;
+    @JsonProperty("areaDto")
+    private AreaDto areaDto;
     @JsonProperty("salary")
     private Salary salary;
     @JsonProperty("type")
@@ -60,14 +60,14 @@ public class Vacancy {
         this.name = name;
     }
 
-    @JsonProperty("area")
-    public Area getArea() {
-        return area;
+    @JsonProperty("areaDto")
+    public AreaDto getArea() {
+        return areaDto;
     }
 
-    @JsonProperty("area")
-    public void setArea(Area area) {
-        this.area = area;
+    @JsonProperty("areaDto")
+    public void setArea(AreaDto areaDto) {
+        this.areaDto = areaDto;
     }
 
     @JsonProperty("salary")

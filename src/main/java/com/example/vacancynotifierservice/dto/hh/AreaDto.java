@@ -12,7 +12,7 @@ import java.util.Map;
         "name",
         "url"
 })
-public class Area {
+public class AreaDto {
 
     @JsonProperty("id")
     private String id;
