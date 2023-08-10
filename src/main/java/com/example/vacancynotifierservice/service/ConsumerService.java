@@ -28,7 +28,7 @@ public class ConsumerService {
         sendMessagesToTelegram(users, composeVacancyMessage(vacancy));
     }
 
-    private void sendMessagesToTelegram(List<UserDto> users, String message){
+    private void sendMessagesToTelegram(List<UserDto> users, String message) {
         for (UserDto user : users) {
             if (user.getTelegramChatId() != null) {
                 sendMessage(user.getTelegramChatId(), message);
@@ -71,7 +71,6 @@ public class ConsumerService {
         String requirement = vacancy.getSnippet().getRequirement();
         String responsibility = vacancy.getSnippet().getResponsibility();
         String experience = vacancy.getExperience().getName();
-        log.info("snippets -> " + requirement + " -> "+responsibility + " -> " + experience);
         if (requirement != null) {
             stringBuilder.append("\n").append("<u>Требования:</u> ").append(requirement);
         }
@@ -85,15 +84,6 @@ public class ConsumerService {
         stringBuilder.append("\n");
         stringBuilder.append("\n").append("Ссылка на вакансию -> ").append(vacancy.getAlternateUrl());
 
-
-
         return stringBuilder.toString();
-//                """
-//                Новая вакансия по вашему запросу "%s"!
-//
-//                %s
-//
-//                %s
-//                """.formatted(vacancy.getQuery(), vacancy.getName(), vacancy.getAlternateUrl());
     }
 }
