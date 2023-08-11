@@ -1,5 +1,11 @@
+logging:
+  level:
+    com.example.vacancynotifierservice.service: debug
+
 spring:
   rabbitmq:
     host: localhost
     username: analytics_service
     password: password
+server:
+  port: 9090
