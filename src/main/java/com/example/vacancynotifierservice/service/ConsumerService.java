@@ -23,9 +23,12 @@ public class ConsumerService {
         log.info("Handling vacancy \"{}\" found by query \"{}\"", vacancy.getName(), vacancy.getQuery());
 
         List<UserDto> users = userRepository.findUsersByQuery(vacancy.getQuery());
-        log.debug("{} user(s) found for query \"{}\"", users.size(), vacancy.getQuery());
+        log.info("{} user(s) found for query \"{}\"", users.size(), vacancy.getQuery());
 
-        sendMessagesToTelegram(users, composeVacancyMessage(vacancy));
+        String message = composeVacancyMessage(vacancy);
+        log.info("Message composed - \"{}\"", message);
+
+        sendMessagesToTelegram(users, message);
     }
 
     private void sendMessagesToTelegram(List<UserDto> users, String message) {
