@@ -3,3 +3,6 @@ spring:
     host: rabbitmq
     username: analytics_service
     password: ${RABBIT_PASSWORD}
+
+rest-api:
+  host: http://rest-api:8080
