@@ -6,6 +6,7 @@ import com.example.vacancynotifierservice.dto.telegram.UserDto;
 import com.example.vacancynotifierservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -78,10 +79,10 @@ public class ConsumerService {
             String requirement = vacancy.getSnippet().getRequirement();
             String responsibility = vacancy.getSnippet().getResponsibility();
             if (requirement != null) {
-                stringBuilder.append("\n\n").append("Требования: ").append(requirement);
+                stringBuilder.append("\n\n").append("Требования: ").append(deleteHtmlTags(requirement));
             }
             if (responsibility != null) {
-                stringBuilder.append("\n\n").append("Обязанности: ").append(responsibility);
+                stringBuilder.append("\n\n").append("Обязанности: ").append(deleteHtmlTags(responsibility));
             }
         }
 
@@ -96,5 +97,9 @@ public class ConsumerService {
         stringBuilder.append("\n").append(vacancy.getAlternateUrl());
 
         return stringBuilder.toString();
+    }
+
+    static String deleteHtmlTags(String html) {
+        return Jsoup.parse(html).text();
     }
 }
